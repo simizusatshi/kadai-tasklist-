@@ -2,19 +2,27 @@
 
 @section('content')
 
-    <h1>タスク一覧</h1>
+ <h1>id: {{ $task->id }} の編集ページ</h1>
 
     <div class="row">
         <div class="col-6">
             {!! Form::model($task, ['route' => 'tasks.store']) !!}
         
                 <div class="form-group">
-                    {!! Form::label('content', 'タスク:') !!}
+                    {!! Form::label('status', 'タイトル:') !!}
+                    {!! Form::text('status', null, ['class' => 'form-control']) !!}
+                </div>
+        
+                <div class="form-group">
+                    {!! Form::label('content', 'メッセージ:') !!}
                     {!! Form::text('content', null, ['class' => 'form-control']) !!}
                 </div>
         
-                {!! Form::submit('更新', ['class' => 'btn btn-primary']) !!}
+                {!! Form::submit('投稿', ['class' => 'btn btn-primary']) !!}
+        
             {!! Form::close() !!}
         </div>
     </div>
+
+
 @endsection
