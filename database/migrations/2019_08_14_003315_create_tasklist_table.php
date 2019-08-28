@@ -13,10 +13,14 @@ class CreateTasklistTable extends Migration
      */
     public function up()
     {
-        Schema::create('tasklist', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned()->index();
             $table->string('content');    // content カラム追加
             $table->timestamps();
+            
+            //外部キー制約//
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -27,6 +31,6 @@ class CreateTasklistTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tasklist');
+        Schema::dropIfExists('tasks');
     }
 }
