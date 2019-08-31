@@ -6,6 +6,7 @@
 
     <div class="row">
         <div class="col-6">
+            @if (Auth::id() == $task->user_id)
             {!! Form::model($task, ['route' => ['tasks.update', $task->id], 'method' => 'put']) !!}
         
                 <div class="form-group">
@@ -17,11 +18,10 @@
                     {!! Form::label('content', 'メッセージ:') !!}
                     {!! Form::text('content', null, ['class' => 'form-control']) !!}
                 </div>
-        
                 {!! Form::submit('更新', ['class' => 'btn btn-light']) !!}
-        
             {!! Form::close() !!}
+         @endif
     </div>
-
+ </div>
 
 @endsection

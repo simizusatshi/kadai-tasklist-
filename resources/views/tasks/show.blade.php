@@ -18,10 +18,12 @@
             <td>{{ $task->content }}</td>
         </tr>
     </table>
+      @if (Auth::id() == $task->user_id)
      {!! link_to_route('tasks.edit', 'このメッセージを編集', ['id' => $task->id], ['class' => 'btn btn-light']) !!}
-
+      @endif
+    @if (Auth::id() == $task->user_id)
     {!! Form::model($task, ['route' => ['tasks.destroy', $task->id], 'method' => 'delete']) !!}
-        {!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}
+    {!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}
     {!! Form::close() !!}
-   
+    @endif
 @endsection

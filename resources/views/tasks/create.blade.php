@@ -7,7 +7,7 @@
 
     <div class="row">
         <div class="col-6">
-            
+          
             {!! Form::model($task, ['route' => 'tasks.store']) !!}
         
                 <div class="form-group">
@@ -26,7 +26,7 @@
             {!! Form::close() !!}
         </div>
     </div>
-    @else
+        @else
     <div class="center jumbotron">
             <div class="text-center">
                 <h1>Welcome to the tasklist</h1>

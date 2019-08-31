@@ -13,6 +13,7 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     
     public function index()
     {
         $data = [];
@@ -74,14 +75,32 @@ class TasksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+     
     public function show($id)
     {
-        $task = Task::find($id);
-
-        return view('tasks.show', [
-            'task' => $task,
-        ]);
+        $task = \App\Task::find($id);
+        
+        if(\Auth::id() === $task->user_id){
+        
+        return view('tasks.show',['task' => $task,]);
+        
+        }
+     return redirect('/');
     }
+    
+    
+    public function destroy($id)
+    {
+        $task = \App\Task::find($id);
+
+        if (\Auth::id() === $task->user_id) {
+            
+        $task->delete();
+        }
+
+        return redirect('/');
+    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -89,13 +108,18 @@ class TasksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+     
     public function edit($id)
     {
-       $task = Task::find($id);
-
-        return view('tasks.edit', [
-            'task' => $task,
-        ]);
+        
+       $task =  \App\Task::find($id);
+       
+       if (\Auth::id() === $task->user_id){
+          
+    return view('tasks.edit',['task' => $task,]);
+    
+    }
+    return redirect('/');
     }
 
     /**
@@ -105,19 +129,26 @@ class TasksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+     
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'status' => 'required|max:10',
-            'content' => 'required|max:191',
-        ]);
+    
+    $task =  \App\Task::find($id);
+    
+    if (\Auth::id() === $task->user_id){
         
-        $task = Task::find($id);
-        $task->status = $request->content;
-        $task->content = $request->content;
-        $task->save();
-
-        return redirect('/');
+     $this->validate($request, [
+     'status' => 'required|max:10',
+     'content' => 'required|max:191',
+        ]);
+    
+    $task = Task::find($id);
+    $task->status = $request->status;
+    $task->content = $request->content;
+    $task->save();
+    
+    }
+    return redirect('/');
     }
 
     /**
@@ -126,11 +157,8 @@ class TasksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)/*このまま*/
-    {
-        $task = task::find($id);
-        $task->delete();
-
-        return redirect('/');
-    }
+     
+    
 }
+
+
